@@ -1,0 +1,3 @@
+<form action="localhost/upload" method="POST">
+<input name="myFile">
+</form>

@@ -1,0 +1,40 @@
+import { generateObject } from 'ai';
+import { openai } from '@ai-sdk/openai';
+import dotenv from 'dotenv';
+import { z } from 'zod';
+
+dotenv.config();
+
+async function main() {
+  const { object } = await generateObject({
+    model: openai('gemini-1.5-flash-002'),
+    maxTokens: 512,
+    schema: z.object({
+      stamps: z.array(
+        z.object({
+          country: z.string(),
+          date: z.string(),
+        }),
+      ),
+    }),
+    messages: [
+      {
+        role: 'user',
+        content: [
+          {
+            type: 'text',
+            text: 'list all the object',
+          },
+          {
+            type: 'image',
+            image: fs.readFileSync('.factura0000.png'),
+          },
+        ],
+      },
+    ],
+  });
+
+  console.log(object);
+}
+
+main();
